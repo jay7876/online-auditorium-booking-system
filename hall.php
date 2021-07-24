@@ -3,32 +3,32 @@ if(!session_id()){
 	session_start();
 }
 
-if(!isset($_SESSION['user_data']) && empty($_SESSION['user_data'])){
+
+  if(!isset($_SESSION['user_data']) && empty($_SESSION['user_data'])){
 	header('Location: login.php');
 	exit; 
-} 
+  } 
+   
+?>
 
 
-if($_SERVER["REQUEST_METHOD"]=="POST"){	
-	include 'partials/_dbconnect.php';
-	if(isset($_POST['book'])){ 
-		$showAlert=false;
+<?php
 
-		$name = $_POST["name"];
-		$aid = $_POST["aid"];
-		$total_cost = $_POST["total_cost"];
-		$seats= $_POST["seats"];
-		$date= $_POST["date"];
-		$event= $_POST["event"];
-		$time= $_POST["time"];
-		$phone_number= $_POST["phone_number"];
-		$sql="INSERT INTO `booking` ( `name`,`aid`, `total_cost`,`seats`,`date`,`event`,`time`,`phone_number`) VALUES ('".$name."', '".$aid."', '".$total_cost."','".$seats."','".$date."','".$event."','".$time."','".$phone_number."')";
-		$mysqli->query($sql);
-		echo $mysqli -> error;
-	}
+if($_SERVER["REQUEST_METHOD"]=="POST")
+{
+    $showAlert=false;
+    include 'partials/_dbconnect.php';
+    $aid = $_POST["aid"];
+    $total_cost = $_POST["total_cost"];
+    $seats= $_POST["seats"];
+    $date= $_POST["date"];
+	$event= $_POST["event"];
+	$time= $_POST["time"];
+	$phone_number= $_POST["phone_number"];
 
-	
-    
+      $sql="INSERT INTO `booking` ( `aid`, `total_cost`,`seats`,`date`,`event`,`time`,`phone_number`) VALUES ('".$aid."', '".$total_cost."','".$seats."','".$date."','".$event."','".$time."','".$phone_number."')";
+      $mysqli->query($sql);
+      echo $mysqli -> error;
     
 }
 ?>
@@ -170,22 +170,11 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 			<br>
 			<form action="hall.php" method="post" onsubmit="return(fun4());">
 			<center>
-				
-			<label> your Name </label>
-			<input type="text" id="name" name="name"><br><br>
-				
 				<label> Auditorium ID: </label>
-				<select id="aid" name="aid" >
-				<option id="aid" >101</option>
-					<option id="aid" >102</option>
-					<option id="aid" >103</option>
-	</select>
+				<input type="text" id="aid" name="aid">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<br>
 				<br>
-
-
-				
 				<label> Total Cost: </label>
 				<input type="text" id="total_cost" name="total_cost">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -199,19 +188,17 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 				<br><br>
 				<label> Event Name: </label>
 				<input type="text" id="event" name="event">
-				  <br> <br>
+				<br><br>
 				<label> Timing: </label>
-				<select id="time" name="time">
+				
+				<input type="select" id="time" name="time">
 					<option id="time" >9am to 12pm</option>
 					<option id="time" >2pm to 5pm</option>
 					<option id="time" >7pm to 10pm</option>
-				</select><br><br>
-				<label> phone number </label>
-				<input type="text" id="phone_number" name="phone_number">
+				
 				<br><br><br>
-				<button class="k" name="book"> BOOK</button> 
-
-			
+				<button class="k">BOOK</button> 
+				<button class="k">cancel</button>
 				<br><br><br>
 		    </center>
 		    </form>
